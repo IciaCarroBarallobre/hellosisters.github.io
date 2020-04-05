@@ -1,5 +1,15 @@
 # Como crear un bot para Slack 
 
+### TASK LIST
+
+* [x] Recibir comandos, dar respuesta
+* [ ] Accion comando de guardar
+  * [ ] Gestionar posibles fallos
+  * [ ] Leer canal (Necesitamos nombre y solo da id) 
+* [ ] Documentar porqué el uso de las librerías y flujo de bot 
+
+
+
 ### Instalación del entorno
 
 Usaremos un entorno virtual: `$ virtualenv  -p python3 venv` para manejar las dependencias del proyecto. 
@@ -12,7 +22,7 @@ Dejaremos un archivo que indicará las librerías usadas, por que para instalarl
 
  `$ pip install requirements.txt ` 
 
-### SLACK bot 
+### Funcionamiento del bot 
 
 ##### Configuracion
 
@@ -40,9 +50,19 @@ export WEBSOCKET_CLIENT_CA_BUNDLE=DigiCertGlobalRootCA.crt
 
 
 
-##### Ejecutar
+##### Como ejecutarlo
 
 ```shell
 $ python sisbot.py
 ```
 
+
+
+##### Flujo
+
+TO-DO
+
+### Enlaces importantes
+
+- [Como crear un bot en slack](https://api.slack.com/bot-users)
+- [API usada](https://slack.dev/python-slackclient/)
