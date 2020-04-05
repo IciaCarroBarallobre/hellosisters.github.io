@@ -1,0 +1,13 @@
+{   "guarda":{
+        "descripcion": "\"@mencion guarda msg\" - Guardo el msg en el Readme correspondiente al canal y lo subo GitHub (Not Implemented Yet). ",
+        "respuesta": "Se ha guardado"
+    },
+    "hola":{
+        "descripcion": "\"@mencion hola\" - Saludo de vuelta. ",
+        "respuesta":"Hola, ¿Te puedo ayudar en algo?\n Si quieres ver que posibles interaciones tengo escribe: @mecion ayuda"
+    },
+    "ayuda":{
+        "descripcion": "\"@mencion ayuda\" - Te comento las posibles interaciones que tengo. ",
+        "respuesta": "Mis posibles interaciones actuales son ..."
+    }
+}
