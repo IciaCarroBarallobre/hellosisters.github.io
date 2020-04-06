@@ -4,9 +4,14 @@ import re # Buscar expresiones regulares
 import json 
 from slackclient import SlackClient # Trabajar con Slack
 
+from commands.ayuda import Ayuda
+from commands.hola import Hola
+from commands.guarda import Guarda
+
 # Instanciar cliente de slack con nuestra variable de entorno
 slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 ID_bot = None
+data = None
 
 # constants
 DELAY_AFTER_READ = 3 
@@ -35,19 +40,24 @@ def handle_command(msg, channel):
 
     default_ayuda = "Lo siento, no lo entiendo. \n Para saber las posibles iteraciones que tengo: @mencioname ayuda" 
     response = None
+
     try:
-        with open('./commands.json') as file:
-            data = json.load(file)
-            try:
-                command = msg.split(" ")[0]
-                response = data[command].get('respuesta')
-                if(command == "ayuda"):
-                    for c in data.keys():
-                        response  = response + "\n"+data[c].get('descripcion')
-            except KeyError:
-                response = default_ayuda
-    except IOError:
-        response = "No puedo ayudarte ahora, disculpa las molestias."
+        command_str = msg.split(" ")[0]
+        command = data[command_str]
+        obj = None
+
+
+        if(command.getName() == "guarda"): #TODO estos ifs no me gustan nada
+            obj = msg
+        elif(command.getName() == "ayuda"):
+            obj = data
+
+        response = command.accion(obj)
+
+
+    except KeyError:
+        response = default_ayuda
+
 
     # Enviar la respuesta
     slack_client.api_call("chat.postMessage",channel=channel,text=response)
@@ -57,7 +67,8 @@ if __name__ == "__main__":
         
         print("SisBot se ha conectado correctamente con API Slack RTM")
         ID_bot = slack_client.api_call("auth.test")["user_id"] # ID para el espacio de trabajo en concreto (Util para las menciones)
-                
+
+        data = {"guarda": Guarda() ,"hola": Hola(), "ayuda": Ayuda()}
         while True: 
             command, channel = parse_bot_commands(slack_client.rtm_read())
             if command:

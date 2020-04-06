@@ -43,9 +43,12 @@ A veces da un error por el certificado. La razón por la que esto falla proviene
 Se puede solucionar de la siguiente forma:
 
 ```shell
-wget https://www.tbs-certificats.com/issuerdata/DigiCertGlobalRootCA.crt --no-check-certificate
 
-export WEBSOCKET_CLIENT_CA_BUNDLE=DigiCertGlobalRootCA.crt
+$ cd Certificados && wget https://www.tbs-certificats.com/issuerdata/DigiCertGlobalRootCA.crt --no-check-certificate
+
+$ cd ..
+
+$ export WEBSOCKET_CLIENT_CA_BUNDLE="./Certificados/DigiCertGlobalRootCA.crt"
 ```
 
 

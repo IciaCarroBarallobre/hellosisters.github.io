@@ -2,3 +2,4 @@ venv
 .env
 .vscode
 Certificados
+/commands/__pycache__
