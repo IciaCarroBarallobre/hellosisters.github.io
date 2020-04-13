@@ -1,4 +1,5 @@
-class Command():
+from abc import ABC, abstractmethod
+class Command(ABC):
 
     def __init__(self, name, description):
         self.name = name
@@ -10,6 +11,6 @@ class Command():
     def getDescription(self):
         return self.description
 
-    # Debe devolver una respuesta
-    def accion(self, obj = None):
-        raise NotImplemented("Tiene que implementar el metodo accion.")
+    @abstractmethod
+    def accion(self, obj):
+        pass

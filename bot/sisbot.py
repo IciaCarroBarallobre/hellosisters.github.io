@@ -39,32 +39,36 @@ def parse_direct_mention(message_text):
 def handle_command(msg, channel):
 
     default_ayuda = "Lo siento, no lo entiendo. \n Para saber las posibles iteraciones que tengo: @mencioname ayuda" 
-    response = None
+    response = None    
 
     try:
+
         command_str = msg.split(" ")[0]
         command = data[command_str]
         obj = None
 
+        if(command.getName() == "guarda"): 
+            channel_info = slack_client.api_call("channels.info",channel=channel)
+            channel_name = channel_info.get('channel').get('name')
+            obj = []
+            obj.append(msg) 
+            obj.append(channel_name) 
 
-        if(command.getName() == "guarda"): #TODO estos ifs no me gustan nada
-            obj = msg
         elif(command.getName() == "ayuda"):
             obj = data
-
+        
         response = command.accion(obj)
 
-
     except KeyError:
-        response = default_ayuda
-
+        response = default_ayuda #En caso de que no encuentre el comando
+    except:
+        response = "Ha ocurrido un error"
 
     # Enviar la respuesta
     slack_client.api_call("chat.postMessage",channel=channel,text=response)
 
 if __name__ == "__main__":
     if slack_client.rtm_connect(with_team_state=False): #Conectar cliente con la API Slack RTM
-        
         print("SisBot se ha conectado correctamente con API Slack RTM")
         ID_bot = slack_client.api_call("auth.test")["user_id"] # ID para el espacio de trabajo en concreto (Util para las menciones)
 
